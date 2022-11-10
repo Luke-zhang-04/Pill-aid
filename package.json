@@ -1,0 +1,18 @@
+{
+  "name": "pill-aid",
+  "private": true,
+  "license": "BSD-3-clause",
+  "scripts": {
+    "prepare": "husky install"
+  },
+  "dependencies": {
+    "glob": "^8.0.3"
+  },
+  "devDependencies": {
+    "husky": "^8.0.2",
+    "lint-staged": "^13.0.3",
+    "prettier": "^2.7.1",
+    "prettier-plugin-jsdoc": "^0.4.2",
+    "prettier-plugin-package": "^1.3.0"
+  }
+}
