@@ -21,12 +21,14 @@ importers:
   services/client:
     specifiers:
       "@carbon/icons-react": ^10.22.0
+      "@carbon/themes": ^11.11.0
       "@craco/craco": ^6.4.3
       "@types/carbon-components-react": ^7.55.2
       "@types/jest": ^27.5.2
       "@types/node": ^16.18.3
       "@types/react": ^18.0.25
       "@types/react-dom": ^18.0.8
+      "@types/react-helmet": ^6.1.5
       "@typescript-eslint/eslint-plugin": ^5.42.1
       "@typescript-eslint/parser": ^5.42.1
       carbon-components: ^10.58.3
@@ -42,6 +44,7 @@ importers:
       prettier-plugin-jsdoc: ^0.4.2
       react: ^18.2.0
       react-dom: ^18.2.0
+      react-helmet: ^6.1.0
       react-router: ^6.4.3
       react-router-dom: ^6.4.3
       react-scripts: 5.0.1
@@ -50,12 +53,14 @@ importers:
       web-vitals: ^2.1.4
     dependencies:
       "@carbon/icons-react": 10.49.0_react@18.2.0
+      "@carbon/themes": 11.11.0
       carbon-components: 10.58.3
       carbon-components-react: 7.59.4_5w7jjmzyfnk6glpzykvaalde4y
       carbon-icons: 7.0.7
       normalize.css: 8.0.1
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
+      react-helmet: 6.1.0_react@18.2.0
       react-router: 6.4.3_react@18.2.0
       react-router-dom: 6.4.3_biqbaboplfbrettd7655fr4n2y
       web-vitals: 2.1.4
@@ -66,6 +71,7 @@ importers:
       "@types/node": 16.18.3
       "@types/react": 18.0.25
       "@types/react-dom": 18.0.8
+      "@types/react-helmet": 6.1.5
       "@typescript-eslint/eslint-plugin": 5.42.1_xjqkhfml3y7r2fr7xknijk3uaq
       "@typescript-eslint/parser": 5.42.1_typescript@4.8.4
       eslint-plugin-jsx-a11y: 6.6.1
@@ -1831,11 +1837,27 @@ packages:
       }
     dev: true
 
+  /@carbon/colors/11.7.0:
+    resolution:
+      {
+        integrity: sha512-2B57vtirYTpxGg7p9yIO+s4cwL5QB8ogGQB5Pz+zdaHoVxrLsGlxAg28CQgk7yxw7doqST79bRVYS6FaJq+qJw==,
+      }
+    dev: false
+
   /@carbon/feature-flags/0.7.0:
     resolution:
       {
         integrity: sha512-nxVvnSMC6Ia/xn0j02FHPATfB/Iv6nnkZAQ6GrEdPLivSF1T2oaTvgawUsXBO8RBX7wQBq5l7uW8qH/0WfjIFw==,
       }
+    dev: false
+
+  /@carbon/grid/11.7.0:
+    resolution:
+      {
+        integrity: sha512-OCDXQNSPVOoBQN08Qn5wo2WpKRGRm/kEBo6ZTl2NoDCl21mcYJZ0IDbKPTukixJB1sUNDUlnrpwMoaznPj48dw==,
+      }
+    dependencies:
+      "@carbon/layout": 11.7.0
     dev: false
 
   /@carbon/icon-helpers/10.34.0:
@@ -1867,12 +1889,41 @@ packages:
       }
     dev: false
 
+  /@carbon/layout/11.7.0:
+    resolution:
+      {
+        integrity: sha512-p4YQvW8U5Go0Tz1PZZgllGSPmoq8xBB5PHByuHiAjzwGclxPsBmY6Ea7tftINFW8VlcjDcampyT8VfZXhP2lFg==,
+      }
+    dev: false
+
   /@carbon/telemetry/0.1.0:
     resolution:
       {
         integrity: sha512-kNWt0bkgPwGW0i5h7HFuljbKRXPvIhsKbB+1tEURAYLXoJg9iJLF1eGvWN5iVoFCS2zje4GR3OGOsvvKVe7Hlg==,
       }
     hasBin: true
+    dev: false
+
+  /@carbon/themes/11.11.0:
+    resolution:
+      {
+        integrity: sha512-EhLizr2oMqJXNubI2zWw09qcSPLZdWoBOQ6uNcjHzpXgoGNMwbVJE/qGMy/ivr+EOs6Fe0z5T0u97v+ZhSmRhg==,
+      }
+    dependencies:
+      "@carbon/colors": 11.7.0
+      "@carbon/layout": 11.7.0
+      "@carbon/type": 11.11.0
+      color: 4.2.3
+    dev: false
+
+  /@carbon/type/11.11.0:
+    resolution:
+      {
+        integrity: sha512-eX6z8BibP1En1xBm2wUd01Nzk0Tm1jftR2QSD4JBn4xhnkGR824gpcbLTAIMGx9/Mr3R65Enbam3uFO0OOaH8g==,
+      }
+    dependencies:
+      "@carbon/grid": 11.7.0
+      "@carbon/layout": 11.7.0
     dev: false
 
   /@craco/craco/6.4.5_pz55nzhwxh67asrmxmq5gfw6xu:
@@ -3254,6 +3305,15 @@ packages:
     resolution:
       {
         integrity: sha512-C3GYO0HLaOkk9dDAz3Dl4sbe4AKUGTCfFIZsz3n/82dPNN8Du533HzKatDxeUYWu24wJgMP1xICqkWk1YOLOIw==,
+      }
+    dependencies:
+      "@types/react": 18.0.25
+    dev: true
+
+  /@types/react-helmet/6.1.5:
+    resolution:
+      {
+        integrity: sha512-/ICuy7OHZxR0YCAZLNg9r7I9aijWUWvxaPR6uTuyxe8tAj5RL4Sw1+R6NhXUtOsarkGYPmaHdBDvuXh2DIN/uA==,
       }
     dependencies:
       "@types/react": 18.0.25
@@ -5021,7 +5081,6 @@ packages:
     engines: {node: ">=7.0.0"}
     dependencies:
       color-name: 1.1.4
-    dev: true
 
   /color-name/1.1.3:
     resolution:
@@ -5035,7 +5094,27 @@ packages:
       {
         integrity: sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA==,
       }
-    dev: true
+
+  /color-string/1.9.1:
+    resolution:
+      {
+        integrity: sha512-shrVawQFojnZv6xM40anx4CkoDP+fZsw/ZerEMsW/pyzsRbElpsL/DBVW7q3ExxwusdNXI3lXpuhEZkzs8p5Eg==,
+      }
+    dependencies:
+      color-name: 1.1.4
+      simple-swizzle: 0.2.2
+    dev: false
+
+  /color/4.2.3:
+    resolution:
+      {
+        integrity: sha512-1rXeuUUiGGrykh+CeBdu5Ie7OJwinCgQY0bc7GCRxy5xVHy+moaqkpL/jqQq0MtQOeYcrqEz4abc5f0KtU7W4A==,
+      }
+    engines: {node: ">=12.5.0"}
+    dependencies:
+      color-convert: 2.0.1
+      color-string: 1.9.1
+    dev: false
 
   /colord/2.9.3:
     resolution:
@@ -8005,6 +8084,13 @@ packages:
         integrity: sha512-zz06S8t0ozoDXMG+ube26zeCTNXcKIPJZJi8hBrF4idCLms4CG9QtK7qBl1boi5ODzFpjswb5JPmHCbMpjaYzg==,
       }
     dev: true
+
+  /is-arrayish/0.3.2:
+    resolution:
+      {
+        integrity: sha512-eVRqCvVlZbuw3GrM63ovNSNAeA1K16kaR/LRY/92w0zxQ5/1YzwblUX652i4Xs9RwAGjW9d9y6X88t8OaAJfWQ==,
+      }
+    dev: false
 
   /is-bigint/1.0.4:
     resolution:
@@ -11965,6 +12051,28 @@ packages:
       }
     dev: true
 
+  /react-fast-compare/3.2.0:
+    resolution:
+      {
+        integrity: sha512-rtGImPZ0YyLrscKI9xTpV8psd6I8VAtjKCzQDlzyDvqJA8XOW78TXYQwNRNd8g8JZnDu8q9Fu/1v4HPAVwVdHA==,
+      }
+    dev: false
+
+  /react-helmet/6.1.0_react@18.2.0:
+    resolution:
+      {
+        integrity: sha512-4uMzEY9nlDlgxr61NL3XbKRy1hEkXmKNXhjbAIOVw5vcFrsdYbH2FEwcNyWvWinl103nXgzYNlns9ca+8kFiWw==,
+      }
+    peerDependencies:
+      react: ">=16.3.0"
+    dependencies:
+      object-assign: 4.1.1
+      prop-types: 15.8.1
+      react: 18.2.0
+      react-fast-compare: 3.2.0
+      react-side-effect: 2.1.2_react@18.2.0
+    dev: false
+
   /react-is/16.13.1:
     resolution:
       {
@@ -12119,6 +12227,17 @@ packages:
       - webpack-hot-middleware
       - webpack-plugin-serve
     dev: true
+
+  /react-side-effect/2.1.2_react@18.2.0:
+    resolution:
+      {
+        integrity: sha512-PVjOcvVOyIILrYoyGEpDN3vmYNLdy1CajSFNt4TDsVQC5KpTijDvWVoR+/7Rz2xT978D8/ZtFceXxzsPwZEDvw==,
+      }
+    peerDependencies:
+      react: ^16.3.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      react: 18.2.0
+    dev: false
 
   /react/18.2.0:
     resolution:
@@ -12827,6 +12946,15 @@ packages:
         integrity: sha512-wnD2ZE+l+SPC/uoS0vXeE9L1+0wuaMqKlfz9AMUo38JsyLSBWSFcHR1Rri62LZc12vLr1gb3jl7iwQhgwpAbGQ==,
       }
     dev: true
+
+  /simple-swizzle/0.2.2:
+    resolution:
+      {
+        integrity: sha512-JA//kQgZtbuY83m+xT+tXJkmJncGMTFT+C+g2h2R9uxkYIrE2yy9sgmcLhCnw57/WSD+Eh3J97FPEDFnbXnDUg==,
+      }
+    dependencies:
+      is-arrayish: 0.3.2
+    dev: false
 
   /sisteransi/1.0.5:
     resolution:
