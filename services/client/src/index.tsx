@@ -1,14 +1,35 @@
+import "./init"
+import "normalize.css"
 import "./index.scss"
 import "./vendor.scss"
+import {Auth, Home} from "./pages"
+import {Route, BrowserRouter as Router, Routes} from "react-router-dom"
 import React from "react"
 import ReactDOM from "react-dom/client"
-import {Button} from "carbon-components-react"
+import ErrorBoundary from "./components/errorBoundary"
+import {Helmet} from "react-helmet"
+import {MetaTagsWrapper} from "./components/metaTags"
+
+const App: React.FC = () => (
+    <ErrorBoundary>
+        <Helmet title="Pill-AID" />
+        <Router>
+            <div>
+                {/* prettier-ignore */}
+                <Routes>
+                        <Route path="/"         element={<MetaTagsWrapper title="Home"><Home/></MetaTagsWrapper>} />
+                        <Route path="/login"    element={<MetaTagsWrapper title="Login"><Auth mode="login"/></MetaTagsWrapper>} />
+                        <Route path="/register" element={<MetaTagsWrapper title="Register"><Auth mode="register"/></MetaTagsWrapper>} />
+                    </Routes>
+            </div>
+        </Router>
+    </ErrorBoundary>
+)
 
 const root = ReactDOM.createRoot(document.getElementById("root")!)
 
 root.render(
     <React.StrictMode>
-        <div>Hello world!</div>
-        <Button>Button</Button>
+        <App />
     </React.StrictMode>,
 )

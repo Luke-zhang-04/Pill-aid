@@ -1,2 +1,10 @@
-@import "~carbon-components/scss/globals/scss/styles.scss";
 // https://github.com/carbon-design-system/carbon/issues/4857
+
+@import "~carbon-components/scss/globals/scss/theme";
+
+@import "@carbon/themes/scss/themes";
+
+$carbon--theme: $carbon--theme--g100;
+@include carbon--theme();
+
+@import "~carbon-components/scss/globals/scss/styles.scss";
