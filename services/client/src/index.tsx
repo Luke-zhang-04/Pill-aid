@@ -18,7 +18,6 @@ const App: React.FC = () => {
     const [user, setUser] = React.useState<User>()
 
     onAuthStateChanged(auth, (changedUser) => {
-        console.log({changedUser})
         setUser(changedUser ?? undefined)
     })
 

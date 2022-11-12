@@ -10,7 +10,12 @@ import {
 } from "carbon-components-react"
 import {SubmitHandler, useForm} from "react-hook-form"
 import {auth} from "~/firebase"
-import {createUserWithEmailAndPassword, signInWithEmailAndPassword} from "firebase/auth"
+import {
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    updateProfile,
+    sendEmailVerification,
+} from "firebase/auth"
 import {useNavigate} from "react-router-dom"
 import {zodResolver} from "@hookform/resolvers/zod"
 import * as zod from "zod"
@@ -35,10 +40,10 @@ const Login: React.FC = () => {
     })
     const [error, setError] = React.useState<Error>()
 
-    const onSubmit: SubmitHandler<LoginSchema> = async (event) => {
+    const onSubmit: SubmitHandler<LoginSchema> = async (values) => {
         try {
             setError(undefined)
-            await signInWithEmailAndPassword(auth, event.email, event.password)
+            await signInWithEmailAndPassword(auth, values.email, values.password)
             nav("/")
         } catch (err) {
             setError(createError(err))
@@ -84,7 +89,6 @@ const registerSchema = zod
         password2: zod.string().min(8, "Password must be at least 8 characters"),
     })
     .superRefine(({password, password2}, ctx) => {
-        console.log({password, password2})
         if (password !== password2) {
             ctx.addIssue({
                 code: "custom",
@@ -107,10 +111,13 @@ const Register: React.FC = () => {
     })
     const [error, setError] = React.useState<Error>()
 
-    const onSubmit: SubmitHandler<RegisterSchema> = async (event) => {
+    const onSubmit: SubmitHandler<RegisterSchema> = async (values) => {
         try {
             setError(undefined)
-            await createUserWithEmailAndPassword(auth, event.email, event.password)
+            const user = await createUserWithEmailAndPassword(auth, values.email, values.password)
+
+            await updateProfile(user.user, {displayName: values.username})
+            await sendEmailVerification(user.user)
             nav("/")
         } catch (err) {
             setError(createError(err))
