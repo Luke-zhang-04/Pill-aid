@@ -47,9 +47,7 @@ const Login: React.FC = () => {
     return (
         <Form onSubmit={handleSubmit(onSubmit)}>
             {error && (
-                <InlineNotification kind="error" title={error.name}>
-                    {error.message}
-                </InlineNotification>
+                <InlineNotification kind="error" title={error.name} subtitle={error.message} />
             )}
             <TextInput
                 {...register("email", {required: true})}
@@ -67,7 +65,7 @@ const Login: React.FC = () => {
                 invalidText={errors.password?.message}
             />
             <Link onClick={() => nav("/register", {replace: true})} className="change-mode-link">
-                Create an Account.
+                Create an Account
             </Link>
             <ButtonSet className="auth-footer">
                 <Button kind="ghost">Log in with Google</Button>
@@ -120,9 +118,7 @@ const Register: React.FC = () => {
     return (
         <Form onSubmit={handleSubmit(onSubmit)}>
             {error && (
-                <InlineNotification kind="error" title={error.name}>
-                    {error.message}
-                </InlineNotification>
+                <InlineNotification kind="error" title={error.name} subtitle={error.message} />
             )}
             <TextInput
                 {...register("username")}
