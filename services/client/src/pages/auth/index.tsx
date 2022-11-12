@@ -39,6 +39,7 @@ const Login: React.FC = () => {
         try {
             setError(undefined)
             await signInWithEmailAndPassword(auth, event.email, event.password)
+            nav("/")
         } catch (err) {
             setError(createError(err))
         }
@@ -110,6 +111,7 @@ const Register: React.FC = () => {
         try {
             setError(undefined)
             await createUserWithEmailAndPassword(auth, event.email, event.password)
+            nav("/")
         } catch (err) {
             setError(createError(err))
         }

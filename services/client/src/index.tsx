@@ -12,6 +12,7 @@ import ErrorBoundary from "./components/errorBoundary"
 import {Helmet} from "react-helmet"
 import {MetaTagsWrapper} from "./components/metaTags"
 import {onAuthStateChanged, User} from "firebase/auth"
+import Navbar from "./components/nav"
 
 const App: React.FC = () => {
     const [user, setUser] = React.useState<User>()
@@ -26,6 +27,7 @@ const App: React.FC = () => {
             <AuthContext.Provider value={{currentUser: user}}>
                 <Helmet title="Pill-AID" />
                 <Router>
+                    <Navbar />
                     <div>
                         {/* prettier-ignore */}
                         <Routes>
