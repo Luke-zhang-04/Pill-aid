@@ -1,9 +1,21 @@
 import "./index.scss"
-import {Button, ButtonSet, Form, Link, TextInput, Tile} from "carbon-components-react"
+import {
+    Button,
+    ButtonSet,
+    Form,
+    InlineNotification,
+    Link,
+    TextInput,
+    Tile,
+} from "carbon-components-react"
 import {SubmitHandler, useForm} from "react-hook-form"
+import {auth} from "~/firebase"
+import {createUserWithEmailAndPassword, signInWithEmailAndPassword} from "firebase/auth"
 import {useNavigate} from "react-router-dom"
 import {zodResolver} from "@hookform/resolvers/zod"
 import * as zod from "zod"
+import React from "react"
+import {createError} from "~/utils/error"
 
 const loginSchema = zod.object({
     email: zod.string().email(),
@@ -21,13 +33,24 @@ const Login: React.FC = () => {
     } = useForm<LoginSchema>({
         resolver: zodResolver(loginSchema),
     })
+    const [error, setError] = React.useState<Error>()
 
-    const onSubmit: SubmitHandler<LoginSchema> = (event) => {
-        console.log(event)
+    const onSubmit: SubmitHandler<LoginSchema> = async (event) => {
+        try {
+            setError(undefined)
+            await signInWithEmailAndPassword(auth, event.email, event.password)
+        } catch (err) {
+            setError(createError(err))
+        }
     }
 
     return (
         <Form onSubmit={handleSubmit(onSubmit)}>
+            {error && (
+                <InlineNotification kind="error" title={error.name}>
+                    {error.message}
+                </InlineNotification>
+            )}
             <TextInput
                 {...register("email", {required: true})}
                 id="email"
@@ -83,13 +106,24 @@ const Register: React.FC = () => {
     } = useForm<RegisterSchema>({
         resolver: zodResolver(registerSchema),
     })
+    const [error, setError] = React.useState<Error>()
 
-    const onSubmit: SubmitHandler<RegisterSchema> = (event) => {
-        console.log(event)
+    const onSubmit: SubmitHandler<RegisterSchema> = async (event) => {
+        try {
+            setError(undefined)
+            await createUserWithEmailAndPassword(auth, event.email, event.password)
+        } catch (err) {
+            setError(createError(err))
+        }
     }
 
     return (
         <Form onSubmit={handleSubmit(onSubmit)}>
+            {error && (
+                <InlineNotification kind="error" title={error.name}>
+                    {error.message}
+                </InlineNotification>
+            )}
             <TextInput
                 {...register("username")}
                 id="username"
