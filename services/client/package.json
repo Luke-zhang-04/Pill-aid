@@ -29,6 +29,7 @@
   "devDependencies": {
     "@craco/craco": "^6.4.3",
     "@types/carbon-components-react": "^7.55.2",
+    "@types/carbon__icons-react": "^10.22.0",
     "@types/jest": "^27.5.2",
     "@types/node": "^16.18.3",
     "@types/react": "^18.0.25",
