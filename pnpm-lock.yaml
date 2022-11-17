@@ -47,6 +47,7 @@ importers:
       prettier-plugin-jsdoc: ^0.4.2
       react: ^18.2.0
       react-dom: ^18.2.0
+      react-google-button: ^0.7.2
       react-helmet: ^6.1.0
       react-hook-form: ^7.39.3
       react-router: ^6.4.3
@@ -67,6 +68,7 @@ importers:
       normalize.css: 8.0.1
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
+      react-google-button: 0.7.2_react@18.2.0
       react-helmet: 6.1.0_react@18.2.0
       react-hook-form: 7.39.3_react@18.2.0
       react-router: 6.4.3_react@18.2.0
@@ -12941,6 +12943,18 @@ packages:
       {
         integrity: sha512-rtGImPZ0YyLrscKI9xTpV8psd6I8VAtjKCzQDlzyDvqJA8XOW78TXYQwNRNd8g8JZnDu8q9Fu/1v4HPAVwVdHA==,
       }
+    dev: false
+
+  /react-google-button/0.7.2_react@18.2.0:
+    resolution:
+      {
+        integrity: sha512-LPIqU2hIlc212kqks8MtKjRstquVkP3SIjxlK5B1nIfg2R7YqSusJAxZUkJA5dv/z6QeSuGyI9ujwV/VWMTyAA==,
+      }
+    peerDependencies:
+      react: "*"
+    dependencies:
+      prop-types: 15.8.1
+      react: 18.2.0
     dev: false
 
   /react-helmet/6.1.0_react@18.2.0:

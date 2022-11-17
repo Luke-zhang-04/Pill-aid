@@ -9,18 +9,20 @@ import {
     Tile,
 } from "carbon-components-react"
 import {SubmitHandler, useForm} from "react-hook-form"
-import {auth} from "~/firebase"
+import {auth, googleAuthProvider} from "~/firebase"
 import {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
     updateProfile,
     sendEmailVerification,
+    signInWithPopup,
 } from "firebase/auth"
 import {useNavigate} from "react-router-dom"
 import {zodResolver} from "@hookform/resolvers/zod"
 import * as zod from "zod"
 import React from "react"
 import {createError} from "~/utils/error"
+import GoogleButton from "react-google-button"
 
 const loginSchema = zod.object({
     email: zod.string().email(),
@@ -44,6 +46,15 @@ const Login: React.FC = () => {
         try {
             setError(undefined)
             await signInWithEmailAndPassword(auth, values.email, values.password)
+            nav("/")
+        } catch (err) {
+            setError(createError(err))
+        }
+    }
+
+    const googleAuth = async (): Promise<void> => {
+        try {
+            await signInWithPopup(auth, googleAuthProvider)
             nav("/")
         } catch (err) {
             setError(createError(err))
@@ -74,7 +85,7 @@ const Login: React.FC = () => {
                 Create an Account
             </Link>
             <ButtonSet className="auth-footer">
-                <Button kind="ghost">Log in with Google</Button>
+                <GoogleButton type="dark" onClick={googleAuth} />
                 <Button type="submit">Log In</Button>
             </ButtonSet>
         </Form>
@@ -124,6 +135,15 @@ const Register: React.FC = () => {
         }
     }
 
+    const googleAuth = async (): Promise<void> => {
+        try {
+            await signInWithPopup(auth, googleAuthProvider)
+            nav("/")
+        } catch (err) {
+            setError(createError(err))
+        }
+    }
+
     return (
         <Form onSubmit={handleSubmit(onSubmit)}>
             {error && (
@@ -164,7 +184,7 @@ const Register: React.FC = () => {
                 Already have an account?
             </Link>
             <ButtonSet className="auth-footer">
-                <Button kind="ghost">Register with Google</Button>
+                <GoogleButton type="dark" onClick={googleAuth} />
                 <Button type="submit">Register</Button>
             </ButtonSet>
         </Form>
