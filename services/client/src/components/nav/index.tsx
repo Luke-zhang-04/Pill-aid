@@ -15,6 +15,8 @@ import styles from "./index.module.scss"
 import React, {useContext, useEffect} from "react"
 import {AuthContext} from "~/contexts"
 import {auth} from "~/firebase"
+// import { Forms } from "~/pages"
+// import { Drugview } from "~/pages"
 
 export const Navbar: React.FC = () => {
     const {currentUser} = useContext(AuthContext)
@@ -29,6 +31,12 @@ export const Navbar: React.FC = () => {
             <Link to="/" className={`${styles.headerNameLink}`}>
                 <HeaderName prefix="Pill">AID</HeaderName>
             </Link>
+            <Button as={Link} to="/form" kind="ghost" tooltipPosition="left">
+                Drug Sign-up
+            </Button>
+            <Button as={Link} to="/drugview" kind="ghost" tooltipPosition="left">
+                View Drug Inventory
+            </Button>
             <HeaderGlobalBar>
                 {currentUser ? (
                     <HeaderGlobalAction
@@ -45,6 +53,7 @@ export const Navbar: React.FC = () => {
                     </Button>
                 )}
             </HeaderGlobalBar>
+
             {currentUser && (
                 <HeaderPanel expanded={isExpanded}>
                     <Switcher>

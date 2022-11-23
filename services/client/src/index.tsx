@@ -2,7 +2,7 @@ import "./init"
 import "normalize.css"
 import "./index.scss"
 import "./vendor.scss"
-import {Auth, Home} from "./pages"
+import {Auth, Home, Forms, Drugview} from "./pages"
 import {Route, BrowserRouter as Router, Routes} from "react-router-dom"
 import {auth} from "./firebase"
 import {AuthContext} from "./contexts"
@@ -30,9 +30,11 @@ const App: React.FC = () => {
                     <div>
                         {/* prettier-ignore */}
                         <Routes>
-                            <Route path="/"         element={<MetaTagsWrapper title="Home"><Home/></MetaTagsWrapper>} />
-                            <Route path="/login"    element={<MetaTagsWrapper title="Login"><Auth mode="login"/></MetaTagsWrapper>} />
-                            <Route path="/register" element={<MetaTagsWrapper title="Register"><Auth mode="register"/></MetaTagsWrapper>} />
+                            <Route path="/" element={<MetaTagsWrapper title="Home"><Home /></MetaTagsWrapper>} />
+                            <Route path="/login" element={<MetaTagsWrapper title="Login"><Auth mode="login" /></MetaTagsWrapper>} />
+                            <Route path="/register" element={<MetaTagsWrapper title="Register"><Auth mode="register" /></MetaTagsWrapper>} />
+                            <Route path="/form" element={<MetaTagsWrapper title="Forms"><Forms /></MetaTagsWrapper>} />
+                            <Route path="/drugview" element={<MetaTagsWrapper title="Drugview"><Drugview /></MetaTagsWrapper>} />
                         </Routes>
                     </div>
                 </Router>

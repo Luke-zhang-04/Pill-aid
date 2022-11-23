@@ -45,6 +45,7 @@ const Login: React.FC = () => {
     const onSubmit: SubmitHandler<LoginSchema> = async (values) => {
         try {
             setError(undefined)
+            console.log(values)
             await signInWithEmailAndPassword(auth, values.email, values.password)
             nav("/")
         } catch (err) {
