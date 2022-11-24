@@ -1,0 +1,20 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.content-container {
+  width: min(max(50%, 500px), 850px);
+
+  .bx--form-item {
+    margin-top: 1rem;
+  }
+}
+
+.content-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
