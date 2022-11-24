@@ -1,4 +1,4 @@
-import "./index.scss"
+import "~/index.scss"
 import {
     Button,
     ButtonSet,
@@ -15,33 +15,34 @@ import {zodResolver} from "@hookform/resolvers/zod"
 import * as zod from "zod"
 import React from "react"
 import {createError} from "~/utils/error"
-import {useNavigate} from "react-router"
 
-const loginSchema = zod.object({
+const formSchema = zod.object({
     name: zod.string().min(1, "Required field"),
-    tod: zod.string().min(1, "Required field"),
+    tod: zod
+        .string()
+        .min(1, "Required Field")
+        .regex(/^[0-9]{1,2}:[0-9]{1,2}$/u),
+    isAm: zod.boolean().default(true),
     medType: zod.string().min(1, "Required field"),
 })
 
-type LoginSchema = typeof loginSchema["_type"]
+type FormSchema = typeof formSchema["_type"]
 
 export const Forms: React.FC = () => {
-    const nav = useNavigate()
     const {
         register,
         handleSubmit,
         formState: {errors},
-    } = useForm<LoginSchema>({
-        resolver: zodResolver(loginSchema),
+        ...form
+    } = useForm<FormSchema>({
+        resolver: zodResolver(formSchema),
     })
     const [error, setError] = React.useState<Error>()
 
-    const onSubmit: SubmitHandler<LoginSchema> = async (values) => {
+    const onSubmit: SubmitHandler<FormSchema> = (values) => {
         try {
             setError(undefined)
-            await console.log(values)
-            // await signInWithEmailAndPassword(auth, values.name, values.tod, values.medType)
-            nav("/")
+            console.log(values)
         } catch (err) {
             setError(createError(err))
         }
@@ -52,10 +53,11 @@ export const Forms: React.FC = () => {
             {error && (
                 <InlineNotification kind="error" title={error.name} subtitle={error.message} />
             )}
-            <div className="auth-container">
-                <Tile className="auth-form-container">
+            <div className="container">
+                <Tile className="content-container">
+                    <h2>Edit Dispensing Schedule</h2>
                     <TextInput
-                        {...register("name", {required: true})}
+                        {...register("name")}
                         id="name"
                         labelText="Name"
                         invalid={Boolean(errors.name)}
@@ -63,29 +65,39 @@ export const Forms: React.FC = () => {
                     />
 
                     <TimePicker
-                        {...register("tod", {required: true})}
-                        invalid={Boolean(errors.medType)}
-                        invalidText={errors.medType?.message}
+                        // Manually deal with time
+                        onChange={(event) => form.setValue("tod", event.target.value)}
+                        onBlur={() => form.setFocus("tod")}
+                        name="tod"
+                        invalid={Boolean(errors.tod)}
+                        invalidText={errors.tod?.message}
                         id="tod"
                         labelText="Drug Dispensing Time"
                         placeholder="hh:mm"
                     >
-                        <TimePickerSelect labelText="" id="tod">
+                        <TimePickerSelect
+                            labelText=""
+                            id="tod"
+                            onChange={(event) =>
+                                form.setValue("isAm", event.target.value === "am")
+                            }
+                        >
                             <SelectItem value="am" text="AM" />
                             <SelectItem value="pm" text="PM" />
                         </TimePickerSelect>
                     </TimePicker>
 
                     <TextInput
-                        {...register("medType", {required: true})}
+                        {...register("medType")}
                         id="medType"
-                        labelText="Drug Flavor"
+                        labelText="Medicine Type"
                         type="medType"
                         invalid={Boolean(errors.medType)}
                         invalidText={errors.medType?.message}
                     />
 
-                    <ButtonSet className="auth-footer">
+                    <ButtonSet className="content-footer">
+                        <div />
                         <Button type="submit">Submit</Button>
                     </ButtonSet>
                 </Tile>

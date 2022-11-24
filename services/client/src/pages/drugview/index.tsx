@@ -1,12 +1,12 @@
-import "./index.scss"
+import "~/index.scss"
 import {Form, Tile} from "carbon-components-react"
 import React from "react"
 
 export const Drugview: React.FC = () => (
     <Form>
-        <div className="auth-container">
-            <Tile className="auth-form-container">
-                <p>POTATO</p>
+        <div className="container">
+            <Tile className="content-container">
+                <h2>Drug Inventory</h2>
             </Tile>
         </div>
     </Form>

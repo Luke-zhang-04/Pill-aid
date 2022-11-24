@@ -1,4 +1,4 @@
-import "./index.scss"
+import "~/index.scss"
 import {
     Button,
     ButtonSet,
@@ -85,7 +85,7 @@ const Login: React.FC = () => {
             <Link onClick={() => nav("/register", {replace: true})} className="change-mode-link">
                 Create an Account
             </Link>
-            <ButtonSet className="auth-footer">
+            <ButtonSet className="content-footer">
                 <GoogleButton type="dark" onClick={googleAuth} />
                 <Button type="submit">Log In</Button>
             </ButtonSet>
@@ -184,7 +184,7 @@ const Register: React.FC = () => {
             <Link onClick={() => nav("/login", {replace: true})} className="change-mode-link">
                 Already have an account?
             </Link>
-            <ButtonSet className="auth-footer">
+            <ButtonSet className="content-footer">
                 <GoogleButton type="dark" onClick={googleAuth} />
                 <Button type="submit">Register</Button>
             </ButtonSet>
@@ -197,8 +197,8 @@ export interface Props {
 }
 
 export const Auth: React.FC<Props> = ({mode}) => (
-    <div className="auth-container">
-        <Tile className="auth-form-container">
+    <div className="container">
+        <Tile className="content-container">
             <h2>{mode === "login" ? "Login" : "Register"}</h2>
             {mode === "login" ? <Login /> : <Register />}
         </Tile>
