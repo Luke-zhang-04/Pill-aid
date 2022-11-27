@@ -46,7 +46,7 @@ IncludeBlocks: Regroup
 IndentCaseBlocks: true
 IndentCaseLabels: true
 IndentPPDirectives: AfterHash
-IndentWidth: 4
+IndentWidth: 2
 IndentWrappedFunctionNames: true
 InsertTrailingCommas: Wrapped
 KeepEmptyLinesAtTheStartOfBlocks: false
