@@ -10,6 +10,7 @@ import {
     TimePickerSelect,
     Tile,
 } from "carbon-components-react"
+import {useNavigate} from "react-router-dom"
 import {SubmitHandler, useForm} from "react-hook-form"
 import {zodResolver} from "@hookform/resolvers/zod"
 import * as zod from "zod"
@@ -31,6 +32,7 @@ const formSchema = zod.object({
 type FormSchema = typeof formSchema["_type"]
 
 export const Forms: React.FC = () => {
+    const nav = useNavigate()
     const {currentUser} = useContext(AuthContext)
     const {
         register,
@@ -60,6 +62,7 @@ export const Forms: React.FC = () => {
                         medType: values.medType,
                     })
             }
+            nav("/drugview")
         } catch (err) {
             setError(createError(err))
         }
