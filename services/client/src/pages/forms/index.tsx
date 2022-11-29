@@ -45,20 +45,16 @@ export const Forms: React.FC = () => {
     const onSubmit: SubmitHandler<FormSchema> = async (values) => {
         try {
             setError(undefined)
-            console.log(values)
+
             if (currentUser) {
-                if (values.isAm)
-                    await toDatabase(currentUser.uid, values.name, {
-                        hour: Number(values.tod.split(":")[0]),
-                        min: Number(values.tod.split(":")[1]),
-                        medType: values.medType,
-                    })
-                else
-                    await toDatabase(currentUser.uid, values.name, {
-                        hour: (Number(values.tod.split(":")[0]) % 12) + 12,
-                        min: Number(values.tod.split(":")[1]),
-                        medType: values.medType,
-                    })
+                const time = values.tod.split(":") as [hour: string, min: string]
+
+                await toDatabase(`${currentUser.uid}/${values.name}`, {
+                    hour: values.isAm ? Number(time[0]) : (Number(time[0]) % 12) + 12,
+                    min: Number(time[1]),
+                    medType: values.medType,
+                    name: values.name,
+                })
             }
         } catch (err) {
             setError(createError(err))
