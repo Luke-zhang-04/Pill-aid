@@ -1,8 +1,6 @@
 import {initializeApp} from "firebase/app"
 import {GoogleAuthProvider, getAuth} from "firebase/auth"
-
 import {getFirestore, setDoc, doc} from "firebase/firestore"
-// import { any } from "zod"
 
 const firebaseConfig = {
     apiKey: "AIzaSyBi655f9iEAvVz7MIcnYOVvJqL6zLnEbrQ",
@@ -13,32 +11,11 @@ const firebaseConfig = {
     appId: "1:933725335363:web:539e88cf2114be99b449f6",
 }
 
-export const toDb = (): any => {
-    console.log("FUNCTION CALLED")
-    // init services
+export const toDatabase = async (username: string, name: string, data: any) => {
     const db = getFirestore()
+    const directory = `${username}/${name}`
 
-    // const colRef = collection(db, "form")
-
-    // getDocs(colRef)
-    //     .then((snapshot) => {
-    //         const form = []
-
-    //         snapshot.docs.forEach((doc) => {
-    //             form.push({...doc.data(), id: doc.id})
-    //         })
-    //         console.log(form)
-    //     })
-    //     .catch((err) => {
-    //         console.log(err.message)
-    //     })
-    setDoc(doc(db, "form/a"), {Description: "LUKE IS MONKEY"}, {merge: true})
-        .then(() => {
-            console.log("YEP")
-        })
-        .catch((error: Error) => {
-            console.log(error)
-        })
+    await setDoc(doc(db, directory), data, {merge: true})
 }
 
 export const app = initializeApp(firebaseConfig)
