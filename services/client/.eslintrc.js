@@ -133,7 +133,7 @@ module.exports = {
             },
         ],
         "@typescript-eslint/no-magic-numbers": [
-            "warn",
+            "off",
             {
                 ignoreEnums: true,
                 ignoreNumericLiteralTypes: true,

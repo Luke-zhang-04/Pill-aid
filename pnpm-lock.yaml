@@ -3,6 +3,7 @@ lockfileVersion: 5.4
 importers:
   .:
     specifiers:
+      cross-env: ^7.0.3
       glob: ^8.0.3
       husky: ^8.0.2
       lint-staged: ^13.0.3
@@ -12,6 +13,7 @@ importers:
     dependencies:
       glob: 8.0.3
     devDependencies:
+      cross-env: 7.0.3
       husky: 8.0.2
       lint-staged: 13.0.3
       prettier: 2.7.1
@@ -36,6 +38,7 @@ importers:
       carbon-components: ^10.58.3
       carbon-components-react: ^7.25.0
       carbon-icons: ^7.0.7
+      cross-env: ^7.0.3
       eslint-plugin-jsx-a11y: ^6.6.1
       eslint-plugin-prefer-arrow: ^1.2.3
       eslint-plugin-prettier: ^4.2.1
@@ -86,6 +89,7 @@ importers:
       "@types/react-helmet": 6.1.5
       "@typescript-eslint/eslint-plugin": 5.42.1_xjqkhfml3y7r2fr7xknijk3uaq
       "@typescript-eslint/parser": 5.42.1_typescript@4.8.4
+      cross-env: 7.0.3
       eslint-plugin-jsx-a11y: 6.6.1
       eslint-plugin-prefer-arrow: 1.2.3
       eslint-plugin-prettier: 4.2.1_prettier@2.7.1
@@ -6128,6 +6132,17 @@ packages:
       {
         integrity: sha512-dcKFX3jn0MpIaXjisoRvexIJVEKzaq7z2rZKxf+MSr9TkdmHmsU4m2lcLojrj/FHl8mk5VxMmYA+ftRkP/3oKQ==,
       }
+    dev: true
+
+  /cross-env/7.0.3:
+    resolution:
+      {
+        integrity: sha512-+/HKd6EgcQCJGh2PSjZuUitQBQynKor4wrFbRg4DtAgS1aWO+gU52xpH7M9ScGgXSYmAVS9bIJ8EzuaGw0oNAw==,
+      }
+    engines: {node: ">=10.14", npm: ">=6", yarn: ">=1"}
+    hasBin: true
+    dependencies:
+      cross-spawn: 7.0.3
     dev: true
 
   /cross-spawn/7.0.3:
