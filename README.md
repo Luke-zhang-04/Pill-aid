@@ -17,5 +17,18 @@ This repo is a monorepo with the separate "packages" in the "services" directory
 -   pnpm (`npm i -g pnpm`)
     -   Use pnpm for package management
 -   clang-format (15)
+=======
+-   Python Software Foundation's Black formatter
+-   Python 3.4
+-   Arduino
 
-Hi Luke ;)
+## Note for Future
+
+Here's how the PI communicates with the Arduino:
+![circuit1](./media/circuit1.png)
+![circuit2](./media/circuit2.png)
+![circuit3](./media/circuit3.png)
+
+TX from the PI goes into the logic level converter, then into the RX on the Arduino. Similarly, RX from the PI goes into the converter, and into TX on the Arduino.
+
+The Arduino cannot be programmed unless the PI is off or the RX and TX pins are disconnected.
