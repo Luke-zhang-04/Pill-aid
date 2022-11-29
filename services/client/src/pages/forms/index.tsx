@@ -15,6 +15,7 @@ import {zodResolver} from "@hookform/resolvers/zod"
 import * as zod from "zod"
 import React from "react"
 import {createError} from "~/utils/error"
+import {toDb} from "~/firebase"
 
 const formSchema = zod.object({
     name: zod.string().min(1, "Required field"),
@@ -43,6 +44,7 @@ export const Forms: React.FC = () => {
         try {
             setError(undefined)
             console.log(values)
+            toDb()
         } catch (err) {
             setError(createError(err))
         }
