@@ -13,8 +13,10 @@ import {
 import {SubmitHandler, useForm} from "react-hook-form"
 import {zodResolver} from "@hookform/resolvers/zod"
 import * as zod from "zod"
-import React from "react"
+import React, {useContext} from "react"
 import {createError} from "~/utils/error"
+import {toDatabase} from "~/firebase"
+import {AuthContext} from "~/contexts"
 
 const formSchema = zod.object({
     name: zod.string().min(1, "Required field"),
@@ -29,6 +31,7 @@ const formSchema = zod.object({
 type FormSchema = typeof formSchema["_type"]
 
 export const Forms: React.FC = () => {
+    const {currentUser} = useContext(AuthContext)
     const {
         register,
         handleSubmit,
@@ -39,10 +42,24 @@ export const Forms: React.FC = () => {
     })
     const [error, setError] = React.useState<Error>()
 
-    const onSubmit: SubmitHandler<FormSchema> = (values) => {
+    const onSubmit: SubmitHandler<FormSchema> = async (values) => {
         try {
             setError(undefined)
             console.log(values)
+            if (currentUser) {
+                if (values.isAm)
+                    await toDatabase(currentUser.uid, values.name, {
+                        hour: Number(values.tod.split(":")[0]),
+                        min: Number(values.tod.split(":")[1]),
+                        medType: values.medType,
+                    })
+                else
+                    await toDatabase(currentUser.uid, values.name, {
+                        hour: (Number(values.tod.split(":")[0]) % 12) + 12,
+                        min: Number(values.tod.split(":")[1]),
+                        medType: values.medType,
+                    })
+            }
         } catch (err) {
             setError(createError(err))
         }

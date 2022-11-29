@@ -17,6 +17,7 @@ This repo is a monorepo with the separate "packages" in the "services" directory
 -   pnpm (`npm i -g pnpm`)
     -   Use pnpm for package management
 -   clang-format (15)
+=======
 -   Python Software Foundation's Black formatter
 -   Python 3.4
 -   Arduino
