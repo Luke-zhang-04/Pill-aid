@@ -11,14 +11,13 @@ const firebaseConfig = {
     appId: "1:933725335363:web:539e88cf2114be99b449f6",
 }
 
-export const toDatabase = async (username: string, name: string, data: any) => {
-    const db = getFirestore()
-    const directory = `${username}/${name}`
-
-    await setDoc(doc(db, directory), data, {merge: true})
-}
-
 export const app = initializeApp(firebaseConfig)
+
+export const db = getFirestore(app)
+
+export const toDatabase = async (path: string, data: any) => {
+    await setDoc(doc(db, path), data, {merge: true})
+}
 
 export const auth = getAuth(app)
 
