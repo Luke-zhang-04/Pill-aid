@@ -27,6 +27,7 @@ const formSchema = zod.object({
         .regex(/^[0-9]{1,2}:[0-9]{1,2}$/u),
     isAm: zod.boolean().default(true),
     medType: zod.string().min(1, "Required field"),
+    dosage: zod.string().min(1, "Required field"),
 })
 
 type FormSchema = typeof formSchema["_type"]
@@ -56,6 +57,7 @@ export const Forms: React.FC = () => {
                     min: Number(time[1]),
                     medType: values.medType,
                     name: values.name,
+                    dosage: values.dosage,
                 })
             }
             nav("/drugview")
@@ -102,6 +104,15 @@ export const Forms: React.FC = () => {
                             <SelectItem value="pm" text="PM" />
                         </TimePickerSelect>
                     </TimePicker>
+
+                    <TextInput
+                        {...register("dosage")}
+                        id="dosage"
+                        labelText="Dosage"
+                        type="dosage"
+                        invalid={Boolean(errors.dosage)}
+                        invalidText={errors.dosage?.message}
+                    />
 
                     <TextInput
                         {...register("medType")}

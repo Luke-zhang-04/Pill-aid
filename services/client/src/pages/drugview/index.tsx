@@ -40,6 +40,7 @@ export const Drugview: React.FC = () => {
                         name: xar.name,
                         medType: xar.medType,
                         time: `${xar.hour}:${xar.min < 9 ? `0${xar.min}` : xar.min}`,
+                        dosage: xar.dosage,
                     }
 
                     dataArr.push(arr)
@@ -71,6 +72,10 @@ export const Drugview: React.FC = () => {
         {
             header: "Time",
             key: "time",
+        },
+        {
+            header: "Dosage",
+            key: "dosage",
         },
     ]
 
