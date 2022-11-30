@@ -16,7 +16,7 @@ import {
 import React, {useContext} from "react"
 import {collection, query, getDocs} from "firebase/firestore"
 import {AuthContext} from "~/contexts"
-import {db} from "~/firebase"
+import {db, deleteMedicine} from "~/firebase"
 import "./trash.png"
 
 export const Drugview: React.FC = () => {
@@ -43,7 +43,16 @@ export const Drugview: React.FC = () => {
                         medType: xar.medType,
                         time: `${xar.hour}:${xar.min < 9 ? `0${xar.min}` : xar.min}`,
                         dosage: xar.dosage,
-                        delete: <Button kind="danger--ghost">Delete</Button>,
+                        delete: (
+                            <Button
+                                onClick={() => {
+                                    deleteMedicine(`${currentUser.uid}/${doc.id}`)
+                                }}
+                                kind="danger--ghost"
+                            >
+                                Delete
+                            </Button>
+                        ),
                     }
 
                     dataArr.push(arr)

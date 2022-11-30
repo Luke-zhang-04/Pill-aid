@@ -1,6 +1,6 @@
 import {initializeApp} from "firebase/app"
 import {GoogleAuthProvider, getAuth} from "firebase/auth"
-import {getFirestore, setDoc, doc} from "firebase/firestore"
+import {getFirestore, setDoc, doc, deleteDoc} from "firebase/firestore"
 
 const firebaseConfig = {
     apiKey: "AIzaSyBi655f9iEAvVz7MIcnYOVvJqL6zLnEbrQ",
@@ -17,6 +17,10 @@ export const db = getFirestore(app)
 
 export const toDatabase = async (path: string, data: any) => {
     await setDoc(doc(db, path), data, {merge: true})
+}
+
+export const deleteMedicine = async (path: string) => {
+    await deleteDoc(doc(db, path))
 }
 
 export const auth = getAuth(app)
