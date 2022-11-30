@@ -52,7 +52,7 @@ export const Forms: React.FC = () => {
             if (currentUser) {
                 const time = values.tod.split(":") as [hour: string, min: string]
 
-                await toDatabase(`${currentUser.uid}/${values.name}`, {
+                await toDatabase(`${currentUser.uid}/${crypto.randomUUID()}`, {
                     hour: values.isAm ? Number(time[0]) : (Number(time[0]) % 12) + 12,
                     min: Number(time[1]),
                     medType: values.medType,
