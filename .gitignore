@@ -105,3 +105,6 @@ dist
 .DS_Store
 .env
 .env.development
+config.json
+admin-sdk.json
+__pycache__
