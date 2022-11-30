@@ -11,11 +11,13 @@ import {
     TableCell,
     TableContainer,
     DataTableRow,
+    Button,
 } from "carbon-components-react"
 import React, {useContext} from "react"
 import {collection, query, getDocs} from "firebase/firestore"
 import {AuthContext} from "~/contexts"
 import {db} from "~/firebase"
+import "./trash.png"
 
 export const Drugview: React.FC = () => {
     const {currentUser} = useContext(AuthContext)
@@ -41,6 +43,7 @@ export const Drugview: React.FC = () => {
                         medType: xar.medType,
                         time: `${xar.hour}:${xar.min < 9 ? `0${xar.min}` : xar.min}`,
                         dosage: xar.dosage,
+                        delete: <Button kind="danger--ghost">Delete</Button>,
                     }
 
                     dataArr.push(arr)
@@ -77,18 +80,21 @@ export const Drugview: React.FC = () => {
             header: "Dosage",
             key: "dosage",
         },
+        {
+            header: "",
+            key: "delete",
+        },
     ]
 
     return (
         <Form>
             <div className="container">
                 <Tile className="content-container">
-                    <h2>Drug Inventory</h2>
                     <DataTable
                         rows={data}
                         headers={headerData}
                         render={({rows, headers, getHeaderProps}) => (
-                            <TableContainer title="DataTable">
+                            <TableContainer title="Drug Inventory">
                                 <Table>
                                     <TableHead>
                                         <TableRow>
