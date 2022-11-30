@@ -30,12 +30,10 @@ export const Drugview: React.FC = () => {
                 const que = query(collection(db, currentUser.uid))
                 const querySnapshot = await getDocs(que)
                 const dataArr: DataTableRow<string>[] = []
-
                 let itr = 0
 
                 querySnapshot.forEach((doc) => {
                     xar = doc.data()
-                    // console.log(x)
 
                     const arr = {
                         id: itr.toString(),
@@ -56,21 +54,12 @@ export const Drugview: React.FC = () => {
                     }
 
                     dataArr.push(arr)
-                    // idArr[i] = i;
-                    // nameArr[i] = x.name;
-                    // medTypeArr[i] = x.medType;
-                    // timeArr[i] = x.hour + ":" + x.min;
-
-                    // let myMap = new Map<string, string>();
-                    // myMap.set();
-
-                    // setDatabase(database);
                     itr++
                 })
                 setData(dataArr)
             }
         })()
-    }, [])
+    }, [currentUser?.uid])
 
     const headerData = [
         {
