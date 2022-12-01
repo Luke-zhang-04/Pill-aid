@@ -9,6 +9,7 @@ import {
     TimePicker,
     TimePickerSelect,
     Tile,
+    Dropdown,
 } from "carbon-components-react"
 import {useNavigate} from "react-router-dom"
 import {SubmitHandler, useForm} from "react-hook-form"
@@ -44,6 +45,17 @@ export const Forms: React.FC = () => {
         resolver: zodResolver(formSchema),
     })
     const [error, setError] = React.useState<Error>()
+
+    const drugTypes = [
+        {
+            id: "option 1",
+            label: "Vitamin B",
+        },
+        {
+            id: "option 2",
+            label: "Advil",
+        },
+    ]
 
     const onSubmit: SubmitHandler<FormSchema> = async (values) => {
         try {
@@ -81,7 +93,6 @@ export const Forms: React.FC = () => {
                         invalid={Boolean(errors.name)}
                         invalidText={errors.name?.message}
                     />
-
                     <TimePicker
                         // Manually deal with time
                         onChange={(event) => form.setValue("tod", event.target.value)}
@@ -104,7 +115,6 @@ export const Forms: React.FC = () => {
                             <SelectItem value="pm" text="PM" />
                         </TimePickerSelect>
                     </TimePicker>
-
                     <TextInput
                         {...register("dosage")}
                         id="dosage"
@@ -113,16 +123,28 @@ export const Forms: React.FC = () => {
                         invalid={Boolean(errors.dosage)}
                         invalidText={errors.dosage?.message}
                     />
-
-                    <TextInput
+                    {/* <TextInput
                         {...register("medType")}
                         id="medType"
                         labelText="Medicine Type"
                         type="medType"
                         invalid={Boolean(errors.medType)}
                         invalidText={errors.medType?.message}
+                    /> */}
+                    <p>
+                        <br />
+                    </p>{" "}
+                    {/*hi luke... it's a surprise!*/}
+                    <Dropdown
+                        // onChange={register("medType")}
+                        ariaLabel="Dropdown"
+                        id="carbon-dropdown-example"
+                        items={drugTypes}
+                        label=""
+                        titleText="Medicine Type"
+                        invalid={Boolean(errors.medType)}
+                        invalidText={errors.medType?.message}
                     />
-
                     <ButtonSet className="content-footer">
                         <div />
                         <Button type="submit">Submit</Button>
