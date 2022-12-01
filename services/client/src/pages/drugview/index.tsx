@@ -41,6 +41,17 @@ export const Drugview: React.FC = () => {
                         medType: xar.medType,
                         time: `${xar.hour}:${xar.min < 9 ? `0${xar.min}` : xar.min}`,
                         dosage: xar.dosage,
+                        edit: (
+                            <Button
+                                onClick={() => {
+                                    /*editMedicine(`${currentUser.uid}/${doc.id}`)*/
+                                    // HI ETHAN CALL THE EDIT FUNCTION HERE :D
+                                }}
+                                kind="ghost"
+                            >
+                                Edit
+                            </Button>
+                        ),
                         delete: (
                             <Button
                                 onClick={() => {
@@ -80,6 +91,10 @@ export const Drugview: React.FC = () => {
         },
         {
             header: "",
+            key: "edit",
+        },
+        {
+            header: "",
             key: "delete",
         },
     ]
@@ -92,7 +107,7 @@ export const Drugview: React.FC = () => {
                         rows={data}
                         headers={headerData}
                         render={({rows, headers, getHeaderProps}) => (
-                            <TableContainer title="Drug Inventory">
+                            <TableContainer title="Scheduled Medication">
                                 <Table>
                                     <TableHead>
                                         <TableRow>
