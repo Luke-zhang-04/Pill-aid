@@ -45,6 +45,7 @@ importers:
       eslint-plugin-react: ^7.31.10
       eslint-plugin-react-hooks: ^4.6.0
       firebase: ^9.14.0
+      https-browserify: ^1.0.0
       normalize.css: ^8.0.1
       prettier: ^2.7.1
       prettier-plugin-jsdoc: ^0.4.2
@@ -68,6 +69,7 @@ importers:
       carbon-components-react: 7.59.4_5w7jjmzyfnk6glpzykvaalde4y
       carbon-icons: 7.0.7
       firebase: 9.14.0
+      https-browserify: 1.0.0
       normalize.css: 8.0.1
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
@@ -8647,6 +8649,13 @@ packages:
     transitivePeerDependencies:
       - debug
     dev: true
+
+  /https-browserify/1.0.0:
+    resolution:
+      {
+        integrity: sha512-J+FkSdyD+0mA0N+81tMotaRMfSL9SGi+xpD3T6YApKsc3bGSXJlfXri3VyFOeYkfLRQisDk1W+jIFFKBeUBbBg==,
+      }
+    dev: false
 
   /https-proxy-agent/5.0.1:
     resolution:
