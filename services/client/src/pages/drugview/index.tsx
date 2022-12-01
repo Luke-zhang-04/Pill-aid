@@ -17,7 +17,7 @@ import React, {useContext} from "react"
 import {collection, query, getDocs} from "firebase/firestore"
 import {AuthContext} from "~/contexts"
 import {db, deleteMedicine} from "~/firebase"
-import "./trash.png"
+// import trash from "./trash.png"
 
 export const Drugview: React.FC = () => {
     const {currentUser} = useContext(AuthContext)
@@ -57,7 +57,9 @@ export const Drugview: React.FC = () => {
                                 onClick={() => {
                                     deleteMedicine(`${currentUser.uid}/${doc.id}`)
                                 }}
+                                // renderIcon={trash}
                                 kind="danger--ghost"
+                                // hasIconOnly
                             >
                                 Delete
                             </Button>
@@ -141,30 +143,3 @@ export const Drugview: React.FC = () => {
 }
 
 export default Drugview
-
-/* <DataTable rows={rowData} headers={headerData}>
-  {({ rows, headers, getHeaderProps, getTableProps }) => (
-    <TableContainer title="DataTable">
-      <Table {...getTableProps()}>
-        <TableHead>
-          <TableRow>
-            {headers.map((header) => (
-              <TableHeader {...getHeaderProps({ header })}>
-                {header.header}
-              </TableHeader>
-            ))}
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row.id}>
-              {row.cells.map((cell) => (
-                <TableCell key={cell.id}>{cell.value}</TableCell>
-              ))}
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
-  )}
-</DataTable> */
