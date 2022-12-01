@@ -3,12 +3,57 @@
 #include <Servo.h>
 
 const int backLight = 13;
+const int buzzer = 8;
 
 Servo servo1;
 Servo servo2;
 LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
 
 StaticJsonDocument<200> data;
+
+// https://create.arduino.cc/projecthub/pythonpushover503/among-us-piezo-song-b7a259
+void ringtone() {
+  tone(buzzer, 1046);
+  delay(250);
+  tone(buzzer, 1244);
+  delay(250);
+  tone(buzzer, 1400);
+  delay(250);
+  tone(buzzer, 1510);
+  delay(250);
+  tone(buzzer, 1400);
+  delay(250);
+  tone(buzzer, 1244);
+  delay(250);
+  tone(buzzer, 1046);
+  delay(250);
+  noTone(buzzer);
+  delay(500);
+  tone(buzzer, 932);
+  delay(125);
+  tone(buzzer, 1174);
+  delay(125);
+  tone(buzzer, 1046);
+  delay(250);
+  // End of first
+  noTone(buzzer);
+  delay(500);
+  tone(buzzer, 780);
+  delay(250);
+  tone(buzzer, 525);
+  delay(250);
+  noTone(buzzer);
+  delay(250);
+}
+
+void setup() {
+  Serial.begin(9600);
+
+  pinMode(backLight, OUTPUT);
+  pinMode(buzzer, OUTPUT);
+  digitalWrite(backLight, HIGH);
+  lcd.begin(16, 2);
+}
 
 void lcdReset() {
   lcd.clear();
@@ -30,8 +75,9 @@ void dispensePills(int pill1Qt, int pill2Qt) {
   servo2.write(180);
   delay(1000);
 
-  // Dispense one at a time (motors use a lot of voltage)
+  ringtone();
 
+  // Dispense one at a time (motors use a lot of voltage)
   for (int qt = 0; qt < pill1Qt; qt++) {
     servo1.write(180);
     delay(1000);
@@ -56,14 +102,6 @@ void dispensePills(int pill1Qt, int pill2Qt) {
   digitalWrite(backLight, HIGH);
 }
 
-void setup() {
-  Serial.begin(9600);
-
-  pinMode(backLight, OUTPUT);
-  digitalWrite(backLight, HIGH);
-  lcd.begin(16, 2);
-}
-
 void loop() {
   if (Serial.available()) {
     String input = Serial.readString();
@@ -76,9 +114,7 @@ void loop() {
       lcd.print("Failed to parse object?!?!");
     } else {
       lcdReset();
-      lcd.print("Pill 1: " + data["pill1"].as<String>());
-      lcd.setCursor(0, 1);
-      lcd.print("Pill 2: " + data["pill2"].as<String>());
+      lcd.print("Welcome, " + data["name"].as<String>());
 
       delay(500);
       dispensePills(data["pill1"].as<int>(), data["pill2"].as<int>());
