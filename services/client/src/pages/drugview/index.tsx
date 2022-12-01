@@ -47,10 +47,8 @@ export const Drugview: React.FC = () => {
                     actions: (
                         <div className="table-actions">
                             <Button
-                                onClick={() => {
-                                    /*editMedicine(`${currentUser.uid}/${doc.id}`)*/
-                                    // HI ETHAN CALL THE EDIT FUNCTION HERE :D
-                                }}
+                                as={Link}
+                                to={`/form/${doc.id}`}
                                 kind="ghost"
                                 iconDescription="Edit"
                                 renderIcon={Edit16}

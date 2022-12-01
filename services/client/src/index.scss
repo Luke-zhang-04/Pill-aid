@@ -8,7 +8,8 @@
 .content-container {
   width: min(max(50%, 500px), 850px);
 
-  .bx--form-item {
+  .bx--form-item,
+  .bx--dropdown__wrapper {
     margin-top: 1rem;
   }
 }

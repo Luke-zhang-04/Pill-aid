@@ -33,6 +33,7 @@ const App: React.FC = () => {
                             <Route path="/" element={<MetaTagsWrapper title="Home"><Home /></MetaTagsWrapper>} />
                             <Route path="/login" element={<MetaTagsWrapper title="Login"><Auth mode="login" /></MetaTagsWrapper>} />
                             <Route path="/register" element={<MetaTagsWrapper title="Register"><Auth mode="register" /></MetaTagsWrapper>} />
+                            <Route path="/form/:id" element={<MetaTagsWrapper title="Forms"><Forms /></MetaTagsWrapper>} />
                             <Route path="/form" element={<MetaTagsWrapper title="Forms"><Forms /></MetaTagsWrapper>} />
                             <Route path="/drugview" element={<MetaTagsWrapper title="Drugview"><Drugview /></MetaTagsWrapper>} />
                         </Routes>
