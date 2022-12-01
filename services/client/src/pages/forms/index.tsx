@@ -9,7 +9,9 @@ import {
     TimePicker,
     TimePickerSelect,
     Tile,
+    Dropdown,
 } from "carbon-components-react"
+import {useNavigate} from "react-router-dom"
 import {SubmitHandler, useForm} from "react-hook-form"
 import {zodResolver} from "@hookform/resolvers/zod"
 import * as zod from "zod"
@@ -26,11 +28,16 @@ const formSchema = zod.object({
         .regex(/^[0-9]{1,2}:[0-9]{1,2}$/u),
     isAm: zod.boolean().default(true),
     medType: zod.string().min(1, "Required field"),
+    dosage: zod
+        .string()
+        .transform(Number)
+        .refine((num) => num >= 0),
 })
 
 type FormSchema = typeof formSchema["_type"]
 
 export const Forms: React.FC = () => {
+    const nav = useNavigate()
     const {currentUser} = useContext(AuthContext)
     const {
         register,
@@ -42,6 +49,17 @@ export const Forms: React.FC = () => {
     })
     const [error, setError] = React.useState<Error>()
 
+    const drugTypes = [
+        {
+            id: "option 1",
+            label: "Vitamin B",
+        },
+        {
+            id: "option 2",
+            label: "Advil",
+        },
+    ]
+
     const onSubmit: SubmitHandler<FormSchema> = async (values) => {
         try {
             setError(undefined)
@@ -49,13 +67,15 @@ export const Forms: React.FC = () => {
             if (currentUser) {
                 const time = values.tod.split(":") as [hour: string, min: string]
 
-                await toDatabase(`${currentUser.uid}/${values.name}`, {
+                await toDatabase(`${currentUser.uid}/${crypto.randomUUID()}`, {
                     hour: values.isAm ? Number(time[0]) : (Number(time[0]) % 12) + 12,
                     min: Number(time[1]),
                     medType: values.medType,
                     name: values.name,
+                    dosage: values.dosage,
                 })
             }
+            nav("/drugview")
         } catch (err) {
             setError(createError(err))
         }
@@ -76,7 +96,6 @@ export const Forms: React.FC = () => {
                         invalid={Boolean(errors.name)}
                         invalidText={errors.name?.message}
                     />
-
                     <TimePicker
                         // Manually deal with time
                         onChange={(event) => form.setValue("tod", event.target.value)}
@@ -99,16 +118,31 @@ export const Forms: React.FC = () => {
                             <SelectItem value="pm" text="PM" />
                         </TimePickerSelect>
                     </TimePicker>
-
                     <TextInput
+                        {...register("dosage")}
+                        id="dosage"
+                        labelText="Dosage"
+                        type="number"
+                        invalid={Boolean(errors.dosage)}
+                        invalidText={errors.dosage?.message}
+                    />
+                    <p>
+                        <br />
+                    </p>
+                    {/*hi luke... it's a surprise!*/}
+                    <Dropdown
                         {...register("medType")}
-                        id="medType"
-                        labelText="Medicine Type"
-                        type="medType"
+                        onChange={(yourmom) =>
+                            form.setValue("medType", yourmom.selectedItem?.label ?? "")
+                        }
+                        ariaLabel="Dropdown"
+                        id="carbon-dropdown-example"
+                        items={drugTypes}
+                        label=""
+                        titleText="Medicine Type"
                         invalid={Boolean(errors.medType)}
                         invalidText={errors.medType?.message}
                     />
-
                     <ButtonSet className="content-footer">
                         <div />
                         <Button type="submit">Submit</Button>
