@@ -8,7 +8,8 @@
 .content-container {
   width: min(max(50%, 500px), 850px);
 
-  .bx--form-item {
+  .bx--form-item,
+  .bx--dropdown__wrapper {
     margin-top: 1rem;
   }
 }
@@ -17,4 +18,15 @@
   display: flex;
   justify-content: space-between;
   margin-top: 1rem;
+}
+
+.bx--table-sort.bx--table-sort--active {
+  background-color: #2f2f2f !important;
+}
+
+.table-actions {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 0;
 }

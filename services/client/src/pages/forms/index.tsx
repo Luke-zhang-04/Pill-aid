@@ -10,15 +10,22 @@ import {
     TimePickerSelect,
     Tile,
     Dropdown,
+    TextInputSkeleton,
+    DropdownSkeleton,
+    DatePickerSkeleton,
+    ButtonSkeleton,
 } from "carbon-components-react"
-import {useNavigate} from "react-router-dom"
+import {useNavigate, useParams} from "react-router-dom"
 import {SubmitHandler, useForm} from "react-hook-form"
 import {zodResolver} from "@hookform/resolvers/zod"
 import * as zod from "zod"
-import React, {useContext} from "react"
+import React, {useContext, useEffect} from "react"
 import {createError} from "~/utils/error"
-import {toDatabase} from "~/firebase"
+import {db, toDatabase} from "~/firebase"
 import {AuthContext} from "~/contexts"
+import {doc, getDoc} from "firebase/firestore"
+import {Data} from "~/types/data"
+import {fillZeros} from "~/utils/date"
 
 const formSchema = zod.object({
     name: zod.string().min(1, "Required field"),
@@ -38,7 +45,9 @@ type FormSchema = typeof formSchema["_type"]
 
 export const Forms: React.FC = () => {
     const nav = useNavigate()
+    const {id} = useParams<{id?: string}>()
     const {currentUser} = useContext(AuthContext)
+    const [isWaiting, setIsWaiting] = React.useState(Boolean(id))
     const {
         register,
         handleSubmit,
@@ -49,16 +58,30 @@ export const Forms: React.FC = () => {
     })
     const [error, setError] = React.useState<Error>()
 
-    const drugTypes = [
-        {
-            id: "option 1",
-            label: "Vitamin B",
-        },
-        {
-            id: "option 2",
-            label: "Advil",
-        },
-    ]
+    const drugTypes = ["Vitamin B", "Advil"]
+
+    useEffect(() => {
+        ;(async () => {
+            if (currentUser && id) {
+                const data = (await getDoc(doc(db, currentUser.uid, id))).data() as
+                    | Data
+                    | undefined
+
+                if (data) {
+                    const isAm = data.hour < 12
+                    const hour = data.hour > 12 ? data.hour - 12 : data.hour || 12
+
+                    form.setValue("name", data.name)
+                    form.setValue("tod", `${hour}:${fillZeros(data.min)}`)
+                    form.setValue("isAm", isAm)
+                    form.setValue("medType", data.medType)
+                    form.setValue("dosage", data.dosage)
+                }
+
+                setIsWaiting(false)
+            }
+        })()
+    }, [currentUser, id])
 
     const onSubmit: SubmitHandler<FormSchema> = async (values) => {
         try {
@@ -67,7 +90,7 @@ export const Forms: React.FC = () => {
             if (currentUser) {
                 const time = values.tod.split(":") as [hour: string, min: string]
 
-                await toDatabase(`${currentUser.uid}/${crypto.randomUUID()}`, {
+                await toDatabase(`${currentUser.uid}/${id ?? crypto.randomUUID()}`, {
                     hour: values.isAm ? Number(time[0]) : (Number(time[0]) % 12) + 12,
                     min: Number(time[1]),
                     medType: values.medType,
@@ -89,63 +112,78 @@ export const Forms: React.FC = () => {
             <div className="container">
                 <Tile className="content-container">
                     <h2>Edit Dispensing Schedule</h2>
-                    <TextInput
-                        {...register("name")}
-                        id="name"
-                        labelText="Name"
-                        invalid={Boolean(errors.name)}
-                        invalidText={errors.name?.message}
-                    />
-                    <TimePicker
-                        // Manually deal with time
-                        onChange={(event) => form.setValue("tod", event.target.value)}
-                        onBlur={() => form.setFocus("tod")}
-                        name="tod"
-                        invalid={Boolean(errors.tod)}
-                        invalidText={errors.tod?.message}
-                        id="tod"
-                        labelText="Drug Dispensing Time"
-                        placeholder="hh:mm"
-                    >
-                        <TimePickerSelect
-                            labelText=""
+                    {isWaiting ? (
+                        <TextInputSkeleton />
+                    ) : (
+                        <TextInput
+                            {...register("name")}
+                            id="name"
+                            labelText="Name"
+                            invalid={Boolean(errors.name)}
+                            invalidText={errors.name?.message}
+                        />
+                    )}
+                    {isWaiting ? (
+                        <DatePickerSkeleton />
+                    ) : (
+                        <TimePicker
+                            // Manually deal with time
+                            onChange={(event) => form.setValue("tod", event.target.value)}
+                            value={form.getValues().tod}
+                            onBlur={() => form.setFocus("tod")}
+                            name="tod"
+                            invalid={Boolean(errors.tod)}
+                            invalidText={errors.tod?.message}
                             id="tod"
-                            onChange={(event) =>
-                                form.setValue("isAm", event.target.value === "am")
-                            }
+                            labelText="Drug Dispensing Time"
+                            placeholder="hh:mm"
                         >
-                            <SelectItem value="am" text="AM" />
-                            <SelectItem value="pm" text="PM" />
-                        </TimePickerSelect>
-                    </TimePicker>
-                    <TextInput
-                        {...register("dosage")}
-                        id="dosage"
-                        labelText="Dosage"
-                        type="number"
-                        invalid={Boolean(errors.dosage)}
-                        invalidText={errors.dosage?.message}
-                    />
-                    <p>
-                        <br />
-                    </p>
-                    {/*hi luke... it's a surprise!*/}
-                    <Dropdown
-                        {...register("medType")}
-                        onChange={(yourmom) =>
-                            form.setValue("medType", yourmom.selectedItem?.label ?? "")
-                        }
-                        ariaLabel="Dropdown"
-                        id="carbon-dropdown-example"
-                        items={drugTypes}
-                        label=""
-                        titleText="Medicine Type"
-                        invalid={Boolean(errors.medType)}
-                        invalidText={errors.medType?.message}
-                    />
+                            <TimePickerSelect
+                                labelText=""
+                                id="tod"
+                                onChange={(event) =>
+                                    form.setValue("isAm", event.target.value === "am")
+                                }
+                                value={form.getValues().isAm ? "am" : "pm"}
+                            >
+                                <SelectItem value="am" text="AM" />
+                                <SelectItem value="pm" text="PM" />
+                            </TimePickerSelect>
+                        </TimePicker>
+                    )}
+                    {isWaiting ? (
+                        <TextInputSkeleton />
+                    ) : (
+                        <TextInput
+                            {...register("dosage")}
+                            id="dosage"
+                            labelText="Dosage"
+                            type="number"
+                            invalid={Boolean(errors.dosage)}
+                            invalidText={errors.dosage?.message}
+                        />
+                    )}
+                    {isWaiting ? (
+                        <DropdownSkeleton />
+                    ) : (
+                        <Dropdown
+                            {...register("medType")}
+                            onChange={(yourmom) =>
+                                form.setValue("medType", yourmom.selectedItem ?? "")
+                            }
+                            ariaLabel="Dropdown"
+                            id="drug-type"
+                            items={drugTypes}
+                            initialSelectedItem={form.getValues().medType}
+                            label="Choose Medicine Type"
+                            titleText="Medicine Type"
+                            invalid={Boolean(errors.medType)}
+                            invalidText={errors.medType?.message}
+                        />
+                    )}
                     <ButtonSet className="content-footer">
                         <div />
-                        <Button type="submit">Submit</Button>
+                        {isWaiting ? <ButtonSkeleton /> : <Button type="submit">Submit</Button>}
                     </ButtonSet>
                 </Tile>
             </div>
