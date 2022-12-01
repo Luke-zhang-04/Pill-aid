@@ -16,15 +16,19 @@ This repo is a monorepo with the separate "packages" in the "services" directory
 -   npm
 -   pnpm (`npm i -g pnpm`)
     -   Use pnpm for package management
--   clang-format (15)
-=======
+-   # clang-format (15)
 -   Python Software Foundation's Black formatter
 -   Python 3.4
 -   Arduino
 
+## Architecture
+
+![arch](./media/arch.jpg)
+
 ## Note for Future
 
 Here's how the PI communicates with the Arduino:
+![circuit](./media/circuit.jpg)
 ![circuit1](./media/circuit1.png)
 ![circuit2](./media/circuit2.png)
 ![circuit3](./media/circuit3.png)
