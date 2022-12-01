@@ -28,7 +28,10 @@ const formSchema = zod.object({
         .regex(/^[0-9]{1,2}:[0-9]{1,2}$/u),
     isAm: zod.boolean().default(true),
     medType: zod.string().min(1, "Required field"),
-    dosage: zod.string().min(1, "Required field"),
+    dosage: zod
+        .string()
+        .transform(Number)
+        .refine((num) => num >= 0),
 })
 
 type FormSchema = typeof formSchema["_type"]
@@ -119,24 +122,19 @@ export const Forms: React.FC = () => {
                         {...register("dosage")}
                         id="dosage"
                         labelText="Dosage"
-                        type="dosage"
+                        type="number"
                         invalid={Boolean(errors.dosage)}
                         invalidText={errors.dosage?.message}
                     />
-                    {/* <TextInput
-                        {...register("medType")}
-                        id="medType"
-                        labelText="Medicine Type"
-                        type="medType"
-                        invalid={Boolean(errors.medType)}
-                        invalidText={errors.medType?.message}
-                    /> */}
                     <p>
                         <br />
-                    </p>{" "}
+                    </p>
                     {/*hi luke... it's a surprise!*/}
                     <Dropdown
-                        // onChange={register("medType")}
+                        {...register("medType")}
+                        onChange={(yourmom) =>
+                            form.setValue("medType", yourmom.selectedItem?.label ?? "")
+                        }
                         ariaLabel="Dropdown"
                         id="carbon-dropdown-example"
                         items={drugTypes}
