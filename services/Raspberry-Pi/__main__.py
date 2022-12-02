@@ -5,8 +5,9 @@ import json
 from datetime import datetime as date
 import itertools
 from functools import reduce
+from pathlib import Path
 
-file = open("./config.json")
+file = open(Path(__file__).parent / "./config.json")
 config = json.load(file)
 file.close()
 
@@ -24,7 +25,7 @@ def should_dispense_now(pill) -> bool:
     )
 
 
-cred = credentials.Certificate("./admin-sdk.json")
+cred = credentials.Certificate(Path(__file__).parent / "./admin-sdk.json")
 app = firebase_admin.initialize_app(cred)
 db = firestore.client(app)
 
@@ -56,10 +57,10 @@ if len(pill1) or len(pill2):
 
     ser.write(
         bytes(
-            '{"pill1": {pill1_qt}, "pill2": {pill2_qt}, "name": {name}}'.format(
+            '{{"pill1": {pill1_qt}, "pill2": {pill2_qt}, "name": "{name}"}}'.format(
                 pill1_qt=pill1_qt,
                 pill2_qt=pill2_qt,
-                name=config.name,
+                name=config["name"],
             ),
             "UTF-8",
         )

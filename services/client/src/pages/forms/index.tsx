@@ -36,7 +36,7 @@ const formSchema = zod.object({
     isAm: zod.boolean().default(true),
     medType: zod.string().min(1, "Required field"),
     dosage: zod
-        .string()
+        .union([zod.string(), zod.number()])
         .transform(Number)
         .refine((num) => num >= 0),
 })
