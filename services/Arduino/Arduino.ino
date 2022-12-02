@@ -44,15 +44,52 @@ void ringtone() {
   delay(250);
   noTone(buzzer);
   delay(250);
-}
-
-void setup() {
-  Serial.begin(9600);
-
-  pinMode(backLight, OUTPUT);
-  pinMode(buzzer, OUTPUT);
-  digitalWrite(backLight, HIGH);
-  lcd.begin(16, 2);
+  // secont part
+  tone(buzzer, 1046);
+  delay(250);
+  tone(buzzer, 1244);
+  delay(250);
+  tone(buzzer, 1400);
+  delay(250);
+  tone(buzzer, 1510);
+  delay(250);
+  tone(buzzer, 1400);
+  delay(250);
+  tone(buzzer, 1244);
+  delay(250);
+  tone(buzzer, 1400);
+  delay(250);
+  noTone(buzzer);
+  delay(750);
+  // fast part
+  tone(buzzer, 1510);
+  delay(125);
+  tone(buzzer, 1400);
+  delay(125);
+  tone(buzzer, 1244);
+  delay(125);
+  tone(buzzer, 1510);
+  delay(125);
+  tone(buzzer, 1400);
+  delay(125);
+  tone(buzzer, 1244);
+  delay(125);
+  tone(buzzer, 1510);
+  delay(125);
+  tone(buzzer, 1400);
+  delay(125);
+  tone(buzzer, 1244);
+  delay(125);
+  tone(buzzer, 1510);
+  delay(125);
+  tone(buzzer, 1400);
+  delay(125);
+  tone(buzzer, 1244);
+  delay(125);
+  tone(buzzer, 1510);
+  delay(125);
+  noTone(buzzer);
+  delay(500);
 }
 
 void lcdReset() {
@@ -60,7 +97,7 @@ void lcdReset() {
   lcd.setCursor(0, 0);
 }
 
-void dispensePills(int pill1Qt, int pill2Qt) {
+void dispensePills(int pill1Qt, int pill2Qt, bool useRingtone = true) {
   // Attach servos
   servo1.attach(9);
   servo2.attach(10);
@@ -75,7 +112,9 @@ void dispensePills(int pill1Qt, int pill2Qt) {
   servo2.write(180);
   delay(1000);
 
-  ringtone();
+  if (useRingtone) {
+    ringtone();
+  }
 
   // Dispense one at a time (motors use a lot of voltage)
   for (int qt = 0; qt < pill1Qt; qt++) {
@@ -102,6 +141,15 @@ void dispensePills(int pill1Qt, int pill2Qt) {
   digitalWrite(backLight, HIGH);
 }
 
+void setup() {
+  Serial.begin(9600);
+
+  pinMode(backLight, OUTPUT);
+  pinMode(buzzer, OUTPUT);
+  dispensePills(0, 0, false);
+  lcd.begin(16, 2);
+}
+
 void loop() {
   if (Serial.available()) {
     String input = Serial.readString();
@@ -111,7 +159,7 @@ void loop() {
 
     if (err) {
       lcdReset();
-      lcd.print("Failed to parse object?!?!");
+      lcd.print("Failed to parse");
     } else {
       lcdReset();
       lcd.print("Welcome, " + data["name"].as<String>());
